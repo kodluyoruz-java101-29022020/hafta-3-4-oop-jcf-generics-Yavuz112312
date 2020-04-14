@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import com.account.management.Account;
 import com.account.management.AccountManager;
-import com.account.management.AuthenticationStatus;
 import com.exception.management.InvalidAuthenticationException;
 
 
@@ -24,10 +23,10 @@ public class Main {
 	private static Account login(AccountManager accountManager, Account account) throws InvalidAuthenticationException {
 		String email, password;
 
-		System.out.print("\nPlease enter your e-mail:");
+		System.out.println("Email :");
 		email = scanner.nextLine();
 
-		System.out.print("Please enter your password:");
+		System.out.println("Password :");
 		password = scanner.nextLine();
 
 		
