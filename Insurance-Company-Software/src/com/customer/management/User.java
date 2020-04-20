@@ -7,7 +7,7 @@ import java.util.List;
 import com.adress.management.Adress;
 import com.adress.management.AdressManager;
 
-public class User{
+public class User {
 
 	protected String name;
 	protected String lastName;
@@ -23,7 +23,7 @@ public class User{
 	}
 
 	public User(String name, String lastName, String email, String password, String job, int age,
-			ArrayList<Adress> adressList, Date lastSystemLoginDate) {
+			ArrayList<Adress> adressList) {
 
 		this.name = name;
 		this.lastName = lastName;
@@ -32,7 +32,7 @@ public class User{
 		this.job = job;
 		this.age = age;
 		this.adressList = adressList;
-		this.lastSystemLoginDate = lastSystemLoginDate;
+		
 
 	}
 
@@ -99,6 +99,8 @@ public class User{
 	public void setLastSystemLoginDate(Date lastSystemLoginDate) {
 		this.lastSystemLoginDate = lastSystemLoginDate;
 	}
+
+	
 
 
 }

@@ -1,14 +1,22 @@
 package com.account.management;
 
+
+import java.util.Set;
 import java.util.TreeSet;
 
 import com.exception.management.InvalidAuthenticationException;
 
 public class AccountManager {
+	
+	public Set<Account> accountSet;
 
-	private TreeSet<Account> accountList;
+	private static TreeSet<Account> accountList;
+	
+	public AccountManager(Set<Account> accountSet) {
+		this.accountSet = accountSet;
+	}
 
-	public TreeSet<Account> getAccountList() {
+	public static TreeSet<Account> getAccountList() {
 		return accountList;
 	}
 

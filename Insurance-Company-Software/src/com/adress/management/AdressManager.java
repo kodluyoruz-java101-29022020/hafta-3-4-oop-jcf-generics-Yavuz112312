@@ -1,5 +1,6 @@
 package com.adress.management;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class AdressManager {
 	
 	public static void addAdress(User user, Adress adress) {
 		if (user.getAdressList() == null) {
-			List<Adress> adressList = new ArrayList<Adress>();
+			List<Adress> adressList =new ArrayList<Adress>();
 			adressList.add(adress);
 		} else {
 			user.getAdressList().add(adress);
