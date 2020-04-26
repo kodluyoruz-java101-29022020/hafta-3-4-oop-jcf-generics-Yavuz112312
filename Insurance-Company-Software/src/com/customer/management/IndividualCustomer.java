@@ -9,7 +9,7 @@ public class IndividualCustomer extends Account{
 
 	public IndividualCustomer(User user, ArrayList<Insurance> insuranceList) {
 		super(user, insuranceList);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
@@ -17,5 +17,10 @@ public class IndividualCustomer extends Account{
 		double totalPrice;
 		totalPrice = insurancePrice + (insurancePrice * 0.70);
 		return totalPrice;	}
+
+	@Override
+	public int compareTo(Account o) {
+		return this.getUser().getLastName().compareTo(o.getUser().getLastName());
+	}
 
 }

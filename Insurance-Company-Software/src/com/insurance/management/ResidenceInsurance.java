@@ -17,7 +17,7 @@ public class ResidenceInsurance extends Insurance{
 		long difference = super.getStartInsuranceDate().getTime() - super.getEndInsuranceDate().getTime();
 		long diffCalculate = TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS);
 		double calculatePrice = (super.insurancePrice * diffCalculate) * 0.50;
-		return super.insurancePrice + calculatePrice;;
+		return super.insurancePrice + calculatePrice;
 	}
 
 }

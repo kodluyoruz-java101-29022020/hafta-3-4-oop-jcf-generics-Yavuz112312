@@ -19,4 +19,9 @@ public class EnterpriseCustomer extends Account{
 		return totalPrice;
 	}
 
+	@Override
+	public int compareTo(Account o) {
+		return this.getUser().getLastName().compareTo(o.getUser().getLastName());
+	}
+
 }

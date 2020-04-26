@@ -1,218 +1,168 @@
 package com.main;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
 import com.account.management.Account;
 import com.account.management.AccountManager;
-import com.adress.management.Adress;
-import com.adress.management.AdressManager;
-import com.adress.management.BusinessAdress;
-import com.adress.management.HomeAdress;
-import com.customer.management.EnterpriseCustomer;
-import com.customer.management.IndividualCustomer;
-import com.customer.management.User;
 import com.exception.management.InvalidAuthenticationException;
+import com.insurance.management.CarInsurance;
+import com.insurance.management.HealthInsurance;
 import com.insurance.management.Insurance;
+import com.insurance.management.ResidenceInsurance;
+import com.insurance.management.TravelInsurance;
 
 public class Main {
 
 	static Scanner scanner = new Scanner(System.in);
+	static AccountManager accountManager = createCustomers();
+	static Account account;
+	static Insurance insurance;
+
 
 	public static void main(String[] args) {
 
-		
-		AccountManager accountManager = new AccountManager(null);
-		
-		
-		createCustomer();
 		showMenu();
-		
-		while(true) {
-			
+
+		while (true) {
+
 			int choice = makeProcessChoice();
-			
-			if(choice == 10) {
+
+			if (choice == 5) {
+				System.out.println("\nSUCCESSFUL LOGOUT");
+				account = null;
 				break;
 			}
-			
+
 			switch (choice) {
-				case 1:
-					
-					break;
-				/*case 2:
-					showEmployeeProfile(employeeService, salaryService);
-					System.out.println();
-					break;
-				case 3:
-					insertEmployee(employeeService);
-					System.out.println();
-					break;
-				case 4:
-					updateEmployee(employeeService);
-					System.out.println();
-					break;
-				case 5:
-					deleteEmployee(employeeService);
-					System.out.println();
-					break;
-				case 6:
-					showMenu();
-					System.out.println();
-					break;
-				case 7:
-					// burada aktif yöneticileri listeleyen bir fonksiyon yazmalısınız.
-					break;
-				case 8:
-					// burada tüm departmanları listeleyiniz.
-					break;
-				case 9:
-					draftEmployeeProfileOperations(employeeService, salaryService);
-					break;*/
+			case 0:
+				showMenu();
+				System.out.println();
+				break;
+
+			case 1:
+				account = loginControl(account);
+				System.out.println();
+				break;
+
+			case 2:
+				account.showUserInfo(account.getUser());
+				System.out.println();
+				break;
+			case 3:
+				addInsurance(account);
+				System.out.println();
+				break;
+			case 4:
+				account.showInsurance(account.getInsuranceList());
+				System.out.println();
+				break;
 			}
-			
+
 		}
-		
-	}
-	
-	private static void showMenu() {
-		
-		System.out.println("1- Insert Customer ");
-		System.out.println("2- Çalışan profili sorgulama ");
-		System.out.println("3- Yeni çalışan ekleme ");
-		System.out.println("4- Çalışan verilerini güncelleme ");
-		System.out.println("5- Çalışan silme ");
-		System.out.println("6- Menüyü tekrar yazdır ");
-		System.out.println("7- Aktif yöneticilik yapanları listele ");
-		System.out.println("8- Departmanları listele ");
-		System.out.println("9- Geçici profil işlemleri ");
-		System.out.println("10- Çıkış ");
-		
+
 	}
 
+	private static void showMenu() {
+
+		System.out.println("0- Show Menu ");
+		System.out.println("1- Login ");
+		System.out.println("2- Customer Info ");
+		System.out.println("3- Add Insurance for Customer ");
+		System.out.println("4- Customer's Insurances ");
+		System.out.println("5- Logout ");
+
+		
+	}
+		
 	public static int makeProcessChoice() {
 
-		System.out.println("İşlem tercihinizi yapınız...");
+		System.out.println("Choose Your Operation");
 		int choice = scanner.nextInt();
 		return choice;
 	}
 
-	public static void insertCustomer() {
+	private static Account loginControl(Account account) {
+		account = login(accountManager, account);
 
-		ArrayList<Adress> userAdress = new ArrayList<Adress>();
-
-		System.out.println("Add Customer Info:");
-
-		System.out.println("Name");
-		String name = scanner.nextLine();
-
-		System.out.println("Last Name");
-		String lastName = scanner.nextLine();
-
-		System.out.println("Email");
-		String email = scanner.nextLine();
-
-		System.out.println("Password");
-		String password = scanner.nextLine();
-
-		System.out.println("Job");
-		String job = scanner.nextLine();
-
-		System.out.println("Age");
-		int age = scanner.nextInt();
-
-		User user = new User(name, lastName, email, password, job, age, userAdress);
-
-		System.out.println("Choose Customer Type");
-		System.out.println("1- Individual");
-		System.out.println("2- Enterprice");
-		System.out.println("**************");
-		System.out.println("Choise 1 or 2 : ");
-		int choose = scanner.nextInt();
-
-		
-		if (choose == 1) {
-
-			System.out.println("Customer's Home Adress Info:");
-
-			System.out.println("Country");
-			String country = scanner.nextLine();
-
-			System.out.println("City");
-			String city = scanner.nextLine();
-
-			System.out.println("Street");
-			String street = scanner.nextLine();
-
-			System.out.println("Number");
-			int number = scanner.nextInt();
-
-			System.out.println("PostCode");
-			int postCode = scanner.nextInt();
-
-			AdressManager.addAdress(user, new HomeAdress(country, city, street, number, postCode));
-			Account account = new IndividualCustomer(user, new ArrayList<Insurance>());
+		while (account == null) {
+			System.out.println();
+			account = login(accountManager, account);
 			
-			System.out.println("*********************************");
-			System.out.println("Saved!");
-
-		} else if (choose == 2) {
-
-			System.out.println("Customer's Business Adress Info:");
-
-			System.out.println("Country");
-			String country = scanner.nextLine();
-
-			System.out.println("City");
-			String city = scanner.nextLine();
-
-			System.out.println("Street");
-			String companyName = scanner.nextLine();
-
-			System.out.println("Number");
-			int number = scanner.nextInt();
-
-			System.out.println("PostCode");
-			int postCode = scanner.nextInt();
-
-			AdressManager.addAdress(user, new BusinessAdress(country, city, companyName, postCode));
-			Account account = new EnterpriseCustomer(user, new ArrayList<Insurance>());
-
-			System.out.println("*********************************");
-			System.out.println("Saved!");
-			
-		} else {
-			System.out.println("Please enter 1 or 2");
 		}
-
+		return account;
 	}
 
-	public static AccountManager createCustomer() {
+	private static Account login(AccountManager accountManager, Account account) {
+		System.out.println("***Login Page***");
+		scanner.nextLine();
+
+		String email, password;
+
+		System.out.println("\nEmail :");
+		email = scanner.nextLine();
+
+		System.out.println("Password :");
+		password = scanner.nextLine();
+
+		try {
+			account = accountManager.login(email, password);
+		} catch (InvalidAuthenticationException e) {
+			System.out.println(e.getMessage());
+		}
+		return account;
+	}
+
+	private static AccountManager createCustomers() {
+
 		Set<Account> accountSet = new TreeSet<Account>();
 		AccountManager accountManager = new AccountManager(accountSet);
-		insertCustomer();
+		accountManager.createCustomers();
 		return accountManager;
-
 	}
 
-	/*
-	 * private static Account login(AccountManager accountManager, Account account)
-	 * throws InvalidAuthenticationException { String email, password;
-	 * 
-	 * System.out.println("Email :"); email = scanner.nextLine();
-	 * 
-	 * System.out.println("Password :"); password = scanner.nextLine();
-	 * 
-	 * 
-	 * account = accountManager.loginControl(email, password);
-	 * 
-	 * return account;
-	 * 
-	 * }
-	 */
+	private static void addInsurance(Account account) {
 
+		Insurance insurance = getInsuranceType();
+		while (insurance == null) {
+			insurance = getInsuranceType();
+		}
+
+		if (account.addInsurance(account, insurance)) {
+			System.out.println("Added!");
+		} else {
+			System.out.println("Try Again");
+		}
+	}
+	
+	private static Insurance getInsuranceType() {
+		byte key;
+		
+		
+		System.out.println("******ADD INSURANCE******");
+		System.out.println("1-Health Insurance");
+		System.out.println("2-Residence Insurance");
+		System.out.println("3-Car Insurance");
+		System.out.println("4-Travel Insurance");
+
+		key = scanner.nextByte();
+		scanner.nextLine();
+		switch (key) {
+		case 1:
+			return new HealthInsurance("Health Insurance",5000, new Date(), new Date());
+		case 2:
+			return new ResidenceInsurance("Residence Insurance", 150000, new Date(), new Date());
+		case 3:
+			return new CarInsurance("Car Insurance",1500, new Date(), new Date());
+		case 4:
+			return new TravelInsurance("Travel Insurance",500, new Date(), new Date());
+		default:
+			return null;
+		}
+	}
 }
+	
+	
+	

@@ -2,20 +2,20 @@ package com.account.management;
 
 public enum AuthenticationStatus {
 
-	SUCCESS("200","Giriş başarılı"), 
-	FAIL("404","Kullanıcı bulunamadı.");
+	SUCCESS(true,"SUCCESSFUL LOGIN"), 
+	FAIL(false,"CUSTOMER NOT EXISTED");
 
-	private final String code;
+	private final boolean code;
 	private final String description;
 
 	
-	private AuthenticationStatus(String code, String description) {
+	private AuthenticationStatus(boolean code, String description) {
 		this.code = code;
 		this.description = description;
 	}
 
 
-	public String getCode() {
+	public boolean getCode() {
 		return this.code;
 	}
 
